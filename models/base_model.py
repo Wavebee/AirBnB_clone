@@ -7,12 +7,12 @@ from datetime import datetime
 class BaseModel():
     """BaseModel class definition"""
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """Initialize the BaseModel class"""
 
         if kwargs:
             time_format = "%Y-%m-%dT%H:%M:%S.%f"
-            
+
             for key, val in kwargs.items():
                 if key == "created_at":
                     self.__dict__[key] = datetime.strptime(val, time_format)
