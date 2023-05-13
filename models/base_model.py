@@ -10,9 +10,20 @@ class BaseModel():
     def __init__(self):
         """Initialize the BaseModel class"""
 
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if kwargs:
+            time_format = "%Y-%m-%dT%H:%M:%S.%f"
+            
+            for key, val in kwargs.items():
+                if key == "created_at":
+                    self.__dict__[key] = datetime.strptime(val, time_format)
+                elif key == "updated_at":
+                    self.__dict__[key] = datetime.strptime(val, time_format)
+                else:
+                    self.__dict__[key] = val
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """print() & str() representation of BaseModel"""
