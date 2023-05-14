@@ -23,7 +23,8 @@ class FileStorage:
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         with open(FileStorage.__file_path, mode="w", encoding="utf-8") as f:
-            obj_dict = {key: val.to_dict() for key, val in FileStorage.__objects.items()}
+            obj_dict = {key: val.to_dict() \
+                    for key, val in FileStorage.__objects.items()}
             json.dump(obj_dict, f)
 
     def reload(self):
@@ -37,5 +38,3 @@ class FileStorage:
                 cls_name = o["__class__"]
                 del o["__class__"]
                 self.new(eval(cls_name)(**o))
-                # TODO: should this overwrite or insert?
-                FileStorage.__objects = obj_dict
