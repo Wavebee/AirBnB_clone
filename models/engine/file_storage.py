@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """file_storage module"""
 
+from models.base_model import BaseModel
 import json
 import os
 
@@ -37,4 +38,4 @@ class FileStorage:
             for obj in obj_dict.values():
                 cls_name = obj["__class__"]
                 del obj["__class__"]
-                self.new(eval(cls_name)(**o))
+                self.new(eval(cls_name)(**obj))
