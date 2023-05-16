@@ -2,7 +2,7 @@
 
 import uuid
 from datetime import datetime
-from models import storage
+import models
 
 
 class BaseModel():
@@ -11,7 +11,7 @@ class BaseModel():
     def __init__(self, *args, **kwargs):
         """Initialize the BaseModel class"""
 
-        if kwargs:
+        if kwargs is not None and kwargs != {}:
             time_format = "%Y-%m-%dT%H:%M:%S.%f"
 
             for key, val in kwargs.items():
@@ -25,7 +25,7 @@ class BaseModel():
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
-            storage.new(self)
+            models.storage.new(self)
 
     def __str__(self):
         """print() & str() representation of BaseModel"""
@@ -37,13 +37,13 @@ class BaseModel():
         updated_at with the current datetime"""
 
         self.updated_at = datetime.now()
-        storage.save()
+        models.storage.save()
 
     def to_dict(self):
         """returns a dictionary containing all keys/values
         of __dict__ of the instance"""
 
-        base_dict = self.__dict__
+        base_dict = self.__dict__.copy()
         base_dict["__class__"] = type(self).__name__
         base_dict["created_at"] = base_dict["created_at"].isoformat()
         base_dict["updated_at"] = base_dict["updated_at"].isoformat()
